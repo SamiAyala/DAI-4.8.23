@@ -10,6 +10,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name ="Login" component={LogIn}/>
+        {/* <Stack.Screen name ="Register" component={Register}/> */}
       </Stack.Navigator>
     </NavigationContainer>
     
