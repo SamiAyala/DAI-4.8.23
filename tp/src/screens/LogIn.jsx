@@ -22,7 +22,7 @@ const LogIn =()=> {
           contrasenia: contraseña,
         });
         console.log("res: ",res.data);
-        setMensaje(res.data);
+        setMensaje("Muy bien");
         
       } catch (e) {
         setMensaje("muy mal.");
@@ -45,7 +45,7 @@ const LogIn =()=> {
         placeholder="Escriba su contraseña"
       />
       <Text>{mensaje}</Text>
-      <Button onPress={submitLogIn} text={"Iniciar Sesión"}/>
+      <Button onPress={submitLogIn} text={"Iniciar Sesión"} />
     </SafeAreaView>
   );
 }
