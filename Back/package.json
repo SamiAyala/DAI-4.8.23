@@ -2,11 +2,11 @@
   "name": "dai-4.8.23",
   "version": "1.0.0",
   "description": "",
-  "main": "Services.js",
+  "main": "API.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node Services.js"
+    "start": "node API.js"
   },
   "repository": {
     "type": "git",

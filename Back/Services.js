@@ -1,45 +1,36 @@
-import express from 'express';
-import cors from 'cors';
-import {Usuario} from './API.js';
-const app = express();
-const port = 5000;
+import config from './dbconfig.js';
+import sql from 'mssql';
 
-console.log("¡Hola Mundo!");
+export class Usuario {
 
-
-app.use(cors());
-app.use(express.json());
-app.post('/login',async(req,res) =>{
-    try{
-        console.log("req.body:",req.body)
-        const response = await Usuario.Login(req.body.nombre, req.body.contrasenia)
-        console.log("response login:",response);
-        if (response.length === 0) {
-            res.status(401).json({message: "Completar los campos"});
-        } else {
-            res.status(200).json({usuario: response})
+    static Login = async (nombre, contrasenia) => {
+        console.log("Estoy en log-in", nombre, contrasenia);
+        let returnEntity = null;
+        try {
+            console.log("config:",config)
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input("pNombre", sql.NVarChar(4000), nombre)
+                .input("pContrasenia", sql.NVarChar(4000), contrasenia)
+                .query("SELECT * FROM Usuario WHERE Nombre = @pNombre AND Contrasenia = @pContrasenia");
+                console.log("result.recordsets:",result.recordsets)
+            returnEntity = result.recordset[0];
+            console.log(returnEntity)
+        } catch (error) {
+            console.log(error, "");
         }
-        res.status(200).json({message : 'Usuario encontrado'})  
-    }catch(error){
-        console.log(error)
-        res.status(404).json({error : 'No se encontro el usuario'})
+        console.log("returnEntity:", returnEntity)
+        return returnEntity;
     }
 
-})
-
-app.post('/registro',async(req,res) =>{
-    try{
-        console.log(req.body)
-        await Usuario.Register(req.body)
-        res.status(201).json({message: 'Usuario registrado'})
-    } catch (error){
-        console.log(error)
-        res.status(500).json({error : 'Fallo el registro'})
+    static Register = async (Usuario) => {
+        const { nombre, telefono, mail, contrasenia, } = Usuario
+        let pool = await sql.connect(config)
+        let result = await pool.request()
+            .input('Nombre', sql.NVarChar(4000), nombre)
+            .input('Telefono', sql.NVarChar(4000), telefono)
+            .input('Mail', sql.NVarChar(4000), mail)
+            .input('Contrasenia', sql.NVarChar(4000), contrasenia)
+            .query('INSERT INTO Usuario (Nombre, Telefono, Mail, Contrasenia) VALUES (@Nombre, @Telefono, @Mail, @Contrasenia)')
     }
-
-})
-
-
-app.listen(port, () => {
-    console.log("Example app listening on port: ", port);
-});
+}
