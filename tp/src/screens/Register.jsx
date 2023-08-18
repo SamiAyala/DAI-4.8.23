@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import Button from "../components/Button";
+import { Link } from "@react-navigation/native";
 
 
 const Register =()=> {
@@ -72,6 +73,7 @@ const Register =()=> {
         />
         <Text>{mensaje}</Text>
         <Button onPress={submitRegister} text={"Registrarse"} disabled={!validateForm()}/>
+        <Link to={{screen : "Login"}} > Iniciar Sesion</Link>
       </SafeAreaView>
     );
   }

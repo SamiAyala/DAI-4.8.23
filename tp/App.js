@@ -10,8 +10,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen name ="Login" component={LogIn}/> */}
         <Stack.Screen name ="Register" component={Register}/>
+        {<Stack.Screen name ="Login" component={LogIn}/> }
       </Stack.Navigator>
     </NavigationContainer>
     

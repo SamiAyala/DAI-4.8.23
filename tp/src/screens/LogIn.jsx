@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import Button from "../components/Button";
+import { Link } from "@react-navigation/native";
 
 const LogIn =()=> {
   const [nombre, setNombre] = useState("");
@@ -46,6 +47,7 @@ const LogIn =()=> {
       />
       <Text>{mensaje}</Text>
       <Button onPress={submitLogIn} text={"Iniciar Sesión"} />
+      <Link to={{screen: "Register"}} > Registrarse</Link>
     </SafeAreaView>
   );
 }
