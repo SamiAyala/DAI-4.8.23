@@ -34,7 +34,8 @@ const LogIn =()=> {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.titulo}>INICIO DE SESION</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => setNombre(text)}
@@ -45,27 +46,43 @@ const LogIn =()=> {
         onChangeText={(text) => setContrasena(text)}
         placeholder="Escriba su contraseña"
       />
-      <Text>{mensaje}</Text>
       <Button onPress={submitLogIn} text={"Iniciar Sesión"} />
-      <Link to={{screen: "Register"}} > Registrarse</Link>
+      <Link to={{screen: "Register"}} style ={styles.textoLink}>Registrarse</Link>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
-    width:200,  
+    width:250,  
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
   },
+  titulo:{
+  fontSize : 40,
+  },
   boton:{
     backgroundColor:"pink",
     borderWidth:2,
     borderColor: "black",
-    width: 200, 
+    width: "auto", 
     padding: 5,
+  },
+  container:{
+   textAlign: "center",
+   justifyContent : "center",
+   marginLeft: "40%",
+   width: 'auto',
+   height: "auto",
+   padding:'200',
+   
+  },
+  textoLink:{
+    color : "red",
+    fontSize: 30,
+    textDecorationLine: 'Underline'
   },
   textoBoton: {
     fontFamily: " cursive",

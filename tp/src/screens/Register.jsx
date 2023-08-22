@@ -26,6 +26,7 @@ const Register =()=> {
           mail: mail,
         }
         console.log(usuario)
+        if (nombre !== "" && contraseña !== "" && telefono != "" && mail != ""){
         const res = await axios.post('http://localhost:5000/registro', usuario)
           .then(res => {
             setMensaje("Muy bien");
@@ -34,6 +35,10 @@ const Register =()=> {
             setMensaje("Muy mal");
             console.log(e);
           });
+        }
+        else{
+          setMensaje("Vacios");
+        }
       };
 
       function validateForm() {
@@ -41,7 +46,8 @@ const Register =()=> {
       }
   
     return (
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.titulo}>Registrarse</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => setNombre(text)}
@@ -71,16 +77,15 @@ const Register =()=> {
           placeholder="Escriba su mail aqui"
           value={mail}
         />
-        <Text>{mensaje}</Text>
         <Button onPress={submitRegister} text={"Registrarse"} disabled={!validateForm()}/>
-        <Link to={{screen : "Login"}} > Iniciar Sesion</Link>
+        <Link to={{screen : "Login"}} style={styles.textoLink}>Iniciar Sesion</Link>
       </SafeAreaView>
     );
   }
   
   const styles = StyleSheet.create({
     input: {
-      width:200,  
+      width:250,  
       height: 40,
       margin: 12,
       borderWidth: 1,
@@ -92,6 +97,22 @@ const Register =()=> {
       borderColor: "black",
       width: 200, 
       padding: 5,
+    },
+    container:{
+     textAlign: "center",
+     justifyContent : "center",
+     marginLeft: "40%",
+     width: 'auto',
+     height: "auto",
+     padding:'200',
+    },
+    titulo:{
+    fontSize : 40,
+    },
+    textoLink:{
+      color : "red",
+      fontSize: 30,
+      textDecorationLine: 'Underline'
     },
     textoBoton: {
       fontFamily: " cursive",
