@@ -15,4 +15,5 @@
 3. ejecutar el comando 'npm i' en ambas.
 
 # 4 Correr el proyecto
-1. En la consola de la carpeta 'tp', ejecutar el comando 'npm start'
+1. En la consola de la carpeta 'Back', ejecutar el comando 'npm start'.
+2. En la consola de la carpeta 'tp', ejecutar el comando 'expo start --tunnel'.
