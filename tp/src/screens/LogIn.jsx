@@ -7,12 +7,12 @@ import {
 } from "react-native";
 import axios from "axios";
 import Button from "../components/Button";
-import { Link } from "@react-navigation/native";
+import { Link , useNavigation } from "@react-navigation/native";
 
 const LogIn =()=> {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContrasena] = useState("");
-  const [mensaje, setMensaje] = useState("hola");
+  const Navigation = useNavigation();
 
   async function submitLogIn() {
     console.log(nombre, contraseña);
@@ -23,13 +23,11 @@ const LogIn =()=> {
           contrasenia: contraseña,
         });
         console.log("res: ",res.data);
-        setMensaje("Muy bien");
+        Navigation("/Home");
         
       } catch (e) {
-        setMensaje("muy mal.");
       }
     } else{
-      setMensaje("Vacios");
     }
   }
 
@@ -46,7 +44,7 @@ const LogIn =()=> {
         onChangeText={(text) => setContrasena(text)}
         placeholder="Escriba su contraseña"
       />
-      <Button onPress={submitLogIn} text={"Iniciar Sesión"} />
+      <Button to={{screen:"Home"}} onPress={submitLogIn} text={"Iniciar Sesión"} />
       <Link to={{screen: "Register"}} style ={styles.textoLink}>Registrarse</Link>
     </SafeAreaView>
   );

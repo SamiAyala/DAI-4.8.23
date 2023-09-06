@@ -7,19 +7,15 @@ export class Usuario {
         console.log("Estoy en log-in", nombre, contrasenia);
         let returnEntity = null;
         try {
-            console.log("config:",config)
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input("pNombre", sql.NVarChar(4000), nombre)
                 .input("pContrasenia", sql.NVarChar(4000), contrasenia)
                 .query("SELECT * FROM Usuario WHERE Nombre = @pNombre AND Contrasenia = @pContrasenia");
-                console.log("result.recordsets:",result.recordsets)
             returnEntity = result.recordset[0];
-            console.log(returnEntity)
         } catch (error) {
             console.log(error, "");
         }
-        console.log("returnEntity:", returnEntity)
         return returnEntity;
     }
 
