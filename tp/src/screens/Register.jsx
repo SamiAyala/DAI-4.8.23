@@ -13,8 +13,6 @@ import { Link } from "@react-navigation/native";
 const Register =()=> {
     const [nombre, setNombre] = useState("");
     const [contraseña, setContrasenia] = useState("");
-    const [telefono,setTelefono] = useState("");
-    const [mail, setMail] = useState("");
     const [mensaje, setMensaje] = useState("hola");
   
     async function submitRegister  (event)  {
@@ -22,11 +20,9 @@ const Register =()=> {
         let usuario = {
           nombre: nombre,
           contrasenia: contraseña,
-          telefono: telefono,
-          mail: mail,
         }
         console.log(usuario)
-        if (nombre !== "" && contraseña !== "" && telefono != "" && mail != ""){
+        if (nombre !== "" && contraseña !== "" ){
         const res = await axios.post('http://localhost:5000/registro', usuario)
           .then(res => {
             setMensaje("Muy bien");
@@ -42,7 +38,7 @@ const Register =()=> {
       };
 
       function validateForm() {
-        return mail.length > 0 && contraseña.length > 0;
+        return nombre.length > 0 && contraseña.length > 0;
       }
   
     return (
@@ -62,20 +58,6 @@ const Register =()=> {
           placeholder="Escriba su contraseña"
           secureTextEntry={true}
           value={contraseña}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setTelefono(text)}
-          keyboardType = "phone-pad"
-          placeholder="Escriba su telefono aqui"
-          value={telefono}
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={(text) => setMail(text)}
-          keyboardType = "email-address"
-          placeholder="Escriba su mail aqui"
-          value={mail}
         />
         <Button onPress={submitRegister} text={"Registrarse"} disabled={!validateForm()}/>
         <Link to={{screen : "Login"}} style={styles.textoLink}>Iniciar Sesion</Link>

@@ -8,11 +8,12 @@ import {
 import axios from "axios";
 import Button from "../components/Button";
 import { Link , useNavigation } from "@react-navigation/native";
+import { useContext } from 'react';
 
 const LogIn =()=> {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContrasena] = useState("");
-  const Navigation = useNavigation();
+  const navigation = useNavigation();
 
   async function submitLogIn() {
     console.log(nombre, contraseña);
@@ -23,7 +24,7 @@ const LogIn =()=> {
           contrasenia: contraseña,
         });
         console.log("res: ",res.data);
-        Navigation("/Home");
+        navigation.navigate("Home",[nombre,contraseña]);
         
       } catch (e) {
       }
@@ -43,8 +44,9 @@ const LogIn =()=> {
         style={styles.input}
         onChangeText={(text) => setContrasena(text)}
         placeholder="Escriba su contraseña"
+        secureTextEntry={true}
       />
-      <Button to={{screen:"Home"}} onPress={submitLogIn} text={"Iniciar Sesión"} />
+      <Button  onPress={submitLogIn}  text={"Iniciar Sesión"} style={styles.boton} />
       <Link to={{screen: "Register"}} style ={styles.textoLink}>Registrarse</Link>
     </SafeAreaView>
   );
