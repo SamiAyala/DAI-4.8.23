@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
       padding: 5,
     },
     textoBoton: {
-      fontFamily: " cursive",
       fontSize: 20,
       marginBottom: 10,
       color: "black",

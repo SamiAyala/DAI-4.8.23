@@ -16,15 +16,16 @@ const LogIn =()=> {
   const navigation = useNavigation();
 
   async function submitLogIn() {
-    console.log(nombre, contraseña);
+    console.log("boca:", nombre, contraseña);
     if (nombre !== "" && contraseña !== "") {
       try {
+        console.log("entre al try")
         const res = await axios.post("http://localhost:5000/login", {
           nombre,
           contrasenia: contraseña,
         });
         console.log("res: ",res.data);
-        navigation.navigate("Home",[nombre,contraseña]);
+        navigation.navigate("Home",{id:res.data.usuario.Id},);
         
       } catch (e) {
       }
@@ -82,7 +83,6 @@ const styles = StyleSheet.create({
   textoLink:{
     color : "red",
     fontSize: 30,
-    textDecorationLine: 'Underline'
   },
   textoBoton: {
     fontFamily: " cursive",

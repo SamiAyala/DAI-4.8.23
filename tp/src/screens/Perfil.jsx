@@ -6,14 +6,38 @@ import {
   TextInput,
 } from "react-native";
 import Button from "../components/Button";
+import axios from "axios";
 import { Link , useNavigation } from "@react-navigation/native";
 
-const Perfil = () => {
-    const [perfil,setPerfil] = useState([]);
+const Perfil = ({route}) => {
+    const idUsuario = route.params.id.id;
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono,setTelefono] = useState("");
     const [mail, setMail] = useState("");
+    const [fkUsuario , setFkUsuario] = useState(idUsuario);
+    const navigation = useNavigation();
+    async function submitForm  (event)  {
+      event.preventDefault();
+      let Perfil = {
+        'nombreUsuario': nombreUsuario,
+        'Apellido': apellido,
+        'Telefono': telefono,
+        'Mail': mail,
+        'fkUsuario': fkUsuario
+      }
+      console.log(Perfil)
+    {
+      const res = await axios.post('http://localhost:5000/formPerfil', Perfil)
+        .then(res => {
+          console.log("Perfil:", Perfil)
+        })
+        .catch(e => {
+          console.log(e);
+        });
+        navigation.navigate("Home",{PerfilCompleto:Perfil});
+      }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -46,6 +70,7 @@ const Perfil = () => {
           placeholder="Escriba su mail aqui"
           value={mail}
         />
+        <Button onPress={submitForm} text={"Enviar"}/>
       </SafeAreaView>
     )
 }

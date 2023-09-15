@@ -94,7 +94,6 @@ const Register =()=> {
     textoLink:{
       color : "red",
       fontSize: 30,
-      textDecorationLine: 'Underline'
     },
     textoBoton: {
       fontFamily: " cursive",

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,22 +8,31 @@ import {
 import { Link , useNavigation } from "@react-navigation/native";
 import { Route } from "@react-navigation/native";
 import Button from "../components/Button";
+import axios from "axios";
 
-const Home = ( ) => {
-    const [perfil1,setPerfil] = useState([]);
+const Home = ({route}) => {
+    const idUsuario = route.params;
     const navigation = useNavigation()
+
+    const [perfil, setPerfil] = useState({});
+
+    useEffect(() => {
+      const resp = axios.get("http://localhost:5000/perfil/:Id", {idusuario: idUsuario});
+      console.log(resp);
+      setPerfil(resp);
+    }, [])
+
     let nombreUsuario ;
     let apellido ;
-    let perfil = {
+    let perfilVacio = {
       nombreUsuario: nombreUsuario,
       apellido: apellido,
     }
-    console.log(perfil)
-    if (typeof perfil.nombreUsuario === "undefined" && typeof perfil.apellido === "undefined") {
+    if (typeof perfilVacio.nombreUsuario === "undefined" && typeof perfilVacio.apellido === "undefined") {
       return (
         <SafeAreaView>
                 <Text>Bienvenido!!!</Text>
-                <Button  onPress={() => navigation.navigate("Perfil")} text={"Completa tu perfil"}></Button>
+                <Button  onPress={() => navigation.navigate("Perfil",{id:idUsuario})} text={"Completa tu perfil"}></Button>
         </SafeAreaView>
       
     )
@@ -32,6 +41,7 @@ const Home = ( ) => {
       return(
       <SafeAreaView>
                 <Text>Bienvenido {perfil.nombreUsuario} {perfil.apellido}</Text>
+                <Button  onPress={() => navigation.navigate("Perfil",{id:idUsuario})} text={"Edita tu perfil"}></Button>
                 
         </SafeAreaView>
       )
