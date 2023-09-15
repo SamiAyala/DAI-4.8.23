@@ -32,32 +32,31 @@ export class Usuario {
 
 export class Perfil{
     
-    static Register = async (Perfil) =>{
-        const {nombreUsuario, apellido, telefono, mail, fechaNacimiento} = Perfil
+    static LlenarForm = async (Perfil) =>{
+        const {nombreUsuario, Apellido, Telefono, Mail, fkUsuario} = Perfil
         let pool = await sql.connect(config)
         let result = await pool.request()
         .input('pNombreUsuario',sql.NVarChar(4000),nombreUsuario)
-        .input('pApellido',sql.NVarChar(4000),apellido)
-        .input('pTelefono',sql.NVarChar(4000),telefono)
-        .input('pMail',sql.NVarChar(4000),mail)
-        .input('pFechaNacimiento',sql.Date,fechaNacimiento)
-        .query("INSERT INTO Perfil(NombreUsuario,Apellido,Telefono,Mail,FechaNacimiento) VALUES (@pNombreUsuario, @pApellido, @pTelefono, @pMail, @pFechaNacimiento)")
+        .input('pApellido',sql.NVarChar(4000),Apellido)
+        .input('pTelefono',sql.NVarChar(4000),Telefono)
+        .input('pMail',sql.NVarChar(4000),Mail)
+        .input('pfkUsuario',sql.Int,fkUsuario)
+        .query("INSERT INTO Perfil(NombreUsuario,Apellido,Telefono,Mail,fkUsuario) VALUES (@pNombreUsuario, @pApellido, @pTelefono, @pMail,@pfkUsuario)")
         
     }
 
-    static Update = async (Perfil) => {
-        const { Id, nombreUsuario, apellido, telefono, mail, fechaNacimiento} = Perfil
+    static UpdateForm = async (Perfil) => {
+        const {nombreUsuario, Apellido, Telefono, Mail, fkUsuario} = Perfil
         let returnEntity = null;
         console.log("Estoy en: update");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input('pNombreUsuario',sql.NVarChar(4000),nombreUsuario)
-                .input('pApellido',sql.NVarChar(4000),apellido)
-                .input('pTelefono',sql.NVarChar(4000),telefono)
-                .input('pMail',sql.NVarChar(4000),mail)
-                .input('pFechaNacimiento',sql.Date,fechaNacimiento)
-                .query('UPDATE Perfil SET NombreUsuario = @pNombreUsuario, Apellido = @pApellido, Telefono = @pTelefono, Mail = @pMail, FechaNacimiento = @pFechaNacimiento,   WHERE Perfil.Id = @pId')
+                .input('pApellido',sql.NVarChar(4000),Apellido)
+                .input('pTelefono',sql.NVarChar(4000),Telefono)
+                .input('pMail',sql.NVarChar(4000),Mail)
+                .query('UPDATE Perfil SET NombreUsuario = @pNombreUsuario, Apellido = @pApellido, Telefono = @pTelefono, Mail = @pMail,   WHERE Perfil.Id = @pId')
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
@@ -65,4 +64,23 @@ export class Perfil{
         return returnEntity;
     }
 
-}
+
+    static BuscarPerfilxIdUsuario = async(Id) =>{
+        let returnEntity = null;
+        console.log("Estoy buscado el perf");
+        try {
+            let pool = await sql.connect(config)
+            let result = await pool.request()
+                .input('@pId', sql.Int(), Id)
+                .query("SELECT  NombreUsuario, Apellido, Telefono, Mail, fkUsuario FROM Perfil INNER JOIN Usuario U on Perfil.fkUsuario = U.Id WHERE U.Id= @pId");
+            returnEntity = result.recordset;
+        } catch (error) {
+            console.log(error);
+        }
+        return returnEntity
+    }
+    }
+
+
+    
+
