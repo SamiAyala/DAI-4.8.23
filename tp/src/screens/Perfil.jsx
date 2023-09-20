@@ -8,6 +8,7 @@ import {
 import Button from "../components/Button";
 import axios from "axios";
 import { Link , useNavigation } from "@react-navigation/native";
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const Perfil = ({route}) => {
     const idUsuario = route.params.id.id;
@@ -16,7 +17,11 @@ const Perfil = ({route}) => {
     const [telefono,setTelefono] = useState("");
     const [mail, setMail] = useState("");
     const [fkUsuario , setFkUsuario] = useState(idUsuario);
+    const [fechaNacimiento,setFechaNacimiento] = useState(new Date());
+    const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
     const navigation = useNavigation();
+    console.log("idUsuario",idUsuario);
     async function submitForm  (event)  {
       event.preventDefault();
       let Perfil = {
@@ -24,9 +29,10 @@ const Perfil = ({route}) => {
         'Apellido': apellido,
         'Telefono': telefono,
         'Mail': mail,
-        'fkUsuario': fkUsuario
+        'fkUsuario': fkUsuario,
+        'fechaNacimiento':fechaNacimiento
       }
-      console.log(Perfil)
+      console.log("Perfil",Perfil)
     {
       const res = await axios.post('http://localhost:5000/formPerfil', Perfil)
         .then(res => {
@@ -37,6 +43,24 @@ const Perfil = ({route}) => {
         });
         navigation.navigate("Home",{PerfilCompleto:Perfil});
       }
+    };
+    const onChange = (event, selectedDate) => {
+      const currentDate = selectedDate;
+      setShow(false);
+      setFechaNacimiento(currentDate);
+    };
+  
+    const showMode = (currentMode) => {
+      setShow(true);
+      setMode(currentMode);
+    };
+  
+    const showDatepicker = () => {
+      showMode('date');
+    };
+  
+    const showTimepicker = () => {
+      showMode('time');
     };
 
     return (
@@ -69,7 +93,19 @@ const Perfil = ({route}) => {
           keyboardType = "email-address"
           placeholder="Escriba su mail aqui"
           value={mail}
+          />
+          <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showTimepicker} title="Show time picker!" />
+      <Text>selected: {fechaNacimiento.toLocaleString()}</Text>
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={fechaNacimiento}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
         />
+      )}
         <Button onPress={submitForm} text={"Enviar"}/>
       </SafeAreaView>
     )

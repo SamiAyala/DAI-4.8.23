@@ -19,13 +19,12 @@ const LogIn =()=> {
     console.log("boca:", nombre, contraseña);
     if (nombre !== "" && contraseña !== "") {
       try {
-        console.log("entre al try")
         const res = await axios.post("http://localhost:5000/login", {
           nombre,
           contrasenia: contraseña,
         });
-        console.log("res: ",res.data);
-        navigation.navigate("Home",{id:res.data.usuario.Id},);
+        console.log("res: ",res.data.usuario[0]);
+        navigation.navigate("Home",{id:res.data.usuario[0].Id},);
         
       } catch (e) {
       }
