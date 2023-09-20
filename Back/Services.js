@@ -12,7 +12,8 @@ export class Usuario {
                 .input("pNombre", sql.NVarChar(4000), nombre)
                 .input("pContrasenia", sql.NVarChar(4000), contrasenia)
                 .query("SELECT * FROM Usuario WHERE Nombre = @pNombre AND Contrasenia = @pContrasenia");
-            returnEntity = result.recordset[0];
+            returnEntity = result.recordsets[0];
+            console.log("returnEntity",returnEntity);
         } catch (error) {
             console.log(error, "");
         }
@@ -33,7 +34,7 @@ export class Usuario {
 export class Perfil{
     
     static LlenarForm = async (Perfil) =>{
-        const {nombreUsuario, Apellido, Telefono, Mail, fkUsuario} = Perfil
+        const {nombreUsuario, Apellido, Telefono, Mail, fkUsuario, fechaNacimiento} = Perfil
         let pool = await sql.connect(config)
         let result = await pool.request()
         .input('pNombreUsuario',sql.NVarChar(4000),nombreUsuario)
@@ -41,7 +42,8 @@ export class Perfil{
         .input('pTelefono',sql.NVarChar(4000),Telefono)
         .input('pMail',sql.NVarChar(4000),Mail)
         .input('pfkUsuario',sql.Int,fkUsuario)
-        .query("INSERT INTO Perfil(NombreUsuario,Apellido,Telefono,Mail,fkUsuario) VALUES (@pNombreUsuario, @pApellido, @pTelefono, @pMail,@pfkUsuario)")
+        .input('pFechaNacimiento',sql.Date,fechaNacimiento)
+        .query("INSERT INTO Perfil(NombreUsuario,Apellido,Telefono,Mail,fkUsuario,FechaNacimiento) VALUES (@pNombreUsuario, @pApellido, @pTelefono, @pMail,@pfkUsuario,@pFechaNacimiento)")
         
     }
 

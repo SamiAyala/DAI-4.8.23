@@ -10,7 +10,6 @@ console.log("¡Hola Mundo!");
 app.use(cors());
 app.use(express.json());
 app.post('/login',async(req,res) =>{
-    console.log("entre al back")
     try{
         
         console.log("req.body:",req.body)
@@ -42,7 +41,7 @@ app.post('/registro',async(req,res) =>{
 
 app.get("/perfil/:Id", async(req,res) => {
     try{
-        console.log(req.body)
+        console.log("req",req.params.Id)
         const perf = await Perfil.BuscarPerfilxIdUsuario(req.params.Id); 
         res.status(200).json(perf);
         
@@ -55,7 +54,7 @@ app.get("/perfil/:Id", async(req,res) => {
 
 app.post('/formPerfil',async(req,res) =>{
     try{
-        console.log(req.body)
+        console.log("req.body",req.body)
         await Perfil.LlenarForm(req.body)
         res.status(201).json({message: 'Perfil completado'})
     } catch (error){
