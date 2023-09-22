@@ -64,6 +64,12 @@ app.post('/formPerfil',async(req,res) =>{
 
 })
 
+app.put('/perfil/editarForm/:Id',async(req,res) => {
+    let perfil = await Perfil.UpdateForm(req.body);
+    res.status(201).json({message: 'Perfil cambiado'})
+    res.status(202).send(perfil);
+})
+
 
 app.listen(port, () => {
     console.log("Example app listening on port: ", port);
