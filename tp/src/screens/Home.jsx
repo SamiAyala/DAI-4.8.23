@@ -9,23 +9,28 @@ import { Link , useNavigation } from "@react-navigation/native";
 import { Route } from "@react-navigation/native";
 import Button from "../components/Button";
 import axios from "axios";
+import { useContext } from "react";
+import { contextPerfil } from "../../App";
 
 const Home = ({route}) => {
-  console.log("route",route)
+  const context = useContext(contextPerfil);
+    console.log("route",route)
     const idUsuario = route.params;
-    const PerfilCompleto = route.params;
+
     const navigation = useNavigation()
 
-    const [perfil, setPerfil] = useState(PerfilCompleto);
-
     useEffect(() => {
-      const resp = axios.get("http://localhost:5000/perfil/:Id", {idusuario: idUsuario.id});
-      console.log("idUsuario",idUsuario.id)
-      console.log("resp",resp);
-      setPerfil(resp);
+      async function getdata() {
+        const resp = await axios.get(`http://localhost:5000/perfil/${idUsuario.id}`);
+        console.log("resp",resp)
+        context.setPerfil(resp.data);
+      }
+      getdata();
     }, [])
 
-    if (typeof PerfilCompleto.nombreUsuario === "undefined" && typeof PerfilCompleto.Apellido === "undefined") {
+    if (typeof context.perfil.NombreUsuario === "undefined" && typeof context.perfil.Apellido === "undefined")
+      
+   {
       return (
         <SafeAreaView>
                 <Text>Bienvenido!!!</Text>
@@ -37,8 +42,8 @@ const Home = ({route}) => {
     else{
       return(
       <SafeAreaView>
-                <Text>Bienvenido {perfil.nombreUsuario} {perfil.apellido}</Text>
-                <Button  onPress={() => navigation.navigate("Perfil",{id:idUsuario})} text={"Edita tu perfil"}></Button>
+                <Text>Bienvenido {context.perfil.NombreUsuario}{" "} {context.perfil.Apellido}</Text>
+                <Button  onPress={() => navigation.navigate("Edit",{id:idUsuario})} text={"Edita tu perfil"}></Button>
                 
         </SafeAreaView>
       )

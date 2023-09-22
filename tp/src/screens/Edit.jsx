@@ -12,7 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useContext } from "react";
 import { contextPerfil } from "../../App";
 
-const Perfil = ({route}) => {
+const Edit = ({route}) => {
     const idUsuario = route.params.id.id;
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [apellido, setApellido] = useState("");
@@ -35,10 +35,10 @@ const Perfil = ({route}) => {
         'fkUsuario': fkUsuario,
         'fechaNacimiento':fechaNacimiento
       }
-      
+
       console.log("Perfil",Perfil)
     {
-      const res = await axios.post('http://localhost:5000/formPerfil', Perfil)
+      const res = await axios.put(`http://localhost:5000//perfil/editarForm/${idUsuario.id}`)
         .then(res => {
           context.setPerfil(Perfil);
           console.log("Perfil q se pasa",context.Perfil)
@@ -76,27 +76,27 @@ const Perfil = ({route}) => {
         onChangeText={(text) => setNombreUsuario(text)}
         keyboardType = "default"
         value={nombreUsuario}
-        placeholder="Escriba su nombre de usuario aqui"
+        placeholder={context.perfil.NombreUsuario}
         />
         <TextInput
         style={styles.input}
         onChangeText={(text) => setApellido(text)}
         keyboardType = "default"
         value={apellido}
-        placeholder="Escriba su apellido de usuario aqui"
+        placeholder={context.perfil.Apellido}
         />
         <TextInput
           style={styles.input}
           onChangeText={(text) => setTelefono(text)}
           keyboardType = "phone-pad"
-          placeholder="Escriba su telefono aqui"
+          placeholder={context.perfil.Telefono}
           value={telefono}
         />
         <TextInput
           style={styles.input}
           onChangeText={(text) => setMail(text)}
           keyboardType = "email-address"
-          placeholder="Escriba su mail aqui"
+          placeholder={context.perfil.Mail}
           value={mail}
           />
           <Button onPress={showDatepicker} title="Show date picker!" />
@@ -155,4 +155,4 @@ const styles = StyleSheet.create({
     },
   });
 
-export default Perfil;
+export default Edit;

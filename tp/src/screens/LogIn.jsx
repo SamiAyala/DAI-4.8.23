@@ -30,7 +30,10 @@ const LogIn =()=> {
       }
     } else{
     }
+    
   }
+
+ 
 
   return (
     <SafeAreaView style={styles.container}>
