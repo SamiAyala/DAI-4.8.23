@@ -65,9 +65,9 @@ app.post('/formPerfil',async(req,res) =>{
 })
 
 app.put('/perfil/editarForm/:Id',async(req,res) => {
+    console.log("UPDATEBODY", req.body);
     let perfil = await Perfil.UpdateForm(req.body);
     res.status(201).json({message: 'Perfil cambiado'})
-    res.status(202).send(perfil);
 })
 
 

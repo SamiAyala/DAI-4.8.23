@@ -15,13 +15,13 @@ import { contextPerfil } from "../../App";
 const Home = ({route}) => {
   const context = useContext(contextPerfil);
     console.log("route",route)
-    const idUsuario = route.params;
+    const {Id} = route.params;
 
     const navigation = useNavigation()
 
     useEffect(() => {
       async function getdata() {
-        const resp = await axios.get(`http://localhost:5000/perfil/${idUsuario.id}`);
+        const resp = await axios.get(`http://localhost:5000/perfil/${Id}`);
         console.log("resp",resp)
         context.setPerfil(resp.data);
       }
@@ -34,7 +34,7 @@ const Home = ({route}) => {
       return (
         <SafeAreaView>
                 <Text>Bienvenido!!!</Text>
-                <Button  onPress={() => navigation.navigate("Perfil",{id:idUsuario})} text={"Completa tu perfil"}></Button>
+                <Button  onPress={() => navigation.navigate("Perfil",{Id})} text={"Completa tu perfil"}></Button>
         </SafeAreaView>
       
     )
@@ -43,7 +43,7 @@ const Home = ({route}) => {
       return(
       <SafeAreaView>
                 <Text>Bienvenido {context.perfil.NombreUsuario}{" "} {context.perfil.Apellido}</Text>
-                <Button  onPress={() => navigation.navigate("Edit",{id:idUsuario})} text={"Edita tu perfil"}></Button>
+                <Button  onPress={() => navigation.navigate("Edit",{Id})} text={"Edita tu perfil"}></Button>
                 
         </SafeAreaView>
       )

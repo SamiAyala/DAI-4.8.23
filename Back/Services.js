@@ -34,10 +34,11 @@ export class Usuario {
 export class Perfil{
     
     static LlenarForm = async (Perfil) =>{
-        const {nombreUsuario, Apellido, Telefono, Mail, fkUsuario, fechaNacimiento} = Perfil
+        const {NombreUsuario, Apellido, Telefono, Mail, fkUsuario, fechaNacimiento} = Perfil
+        console.log(Perfil);
         let pool = await sql.connect(config)
         let result = await pool.request()
-        .input('pNombreUsuario',sql.NVarChar(4000),nombreUsuario)
+        .input('pNombreUsuario',sql.NVarChar(4000),NombreUsuario)
         .input('pApellido',sql.NVarChar(4000),Apellido)
         .input('pTelefono',sql.NVarChar(4000),Telefono)
         .input('pMail',sql.NVarChar(4000),Mail)
@@ -48,18 +49,19 @@ export class Perfil{
     }
 
     static UpdateForm = async (Perfil) => {
-        const {nombreUsuario, Apellido, Telefono, Mail, fechaNacimiento} = Perfil
+        const {Id, NombreUsuario, Apellido, Telefono, Mail, fechaNacimiento} = Perfil
         let returnEntity = null;
         console.log("Estoy en: update");
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .input('pNombreUsuario',sql.NVarChar(4000),nombreUsuario)
+                .input("pId", sql.Int, Id)
+                .input('pNombreUsuario',sql.NVarChar(4000),NombreUsuario)
                 .input('pApellido',sql.NVarChar(4000),Apellido)
                 .input('pTelefono',sql.NVarChar(4000),Telefono)
                 .input('pMail',sql.NVarChar(4000),Mail)
                 .input('pFechaNacimiento',sql.Date,fechaNacimiento)
-                .query('UPDATE Perfil SET NombreUsuario = @pNombreUsuario, Apellido = @pApellido, Telefono = @pTelefono, Mail = @pMail, FechaNacimiento = @pFechaNacimiento, WHERE Perfil.Id = @pId')
+                .query('UPDATE Perfil SET NombreUsuario = @pNombreUsuario, Apellido = @pApellido, Telefono = @pTelefono, Mail = @pMail, FechaNacimiento = @pFechaNacimiento WHERE Perfil.Id = @pId')
             returnEntity = result.recordsets[0];
         } catch (error) {
             console.log(error);
@@ -75,7 +77,7 @@ export class Perfil{
             let pool = await sql.connect(config)
             let result = await pool.request()
                 .input("pId", sql.Int, Id)
-                .query("SELECT  NombreUsuario, Apellido, Telefono, Mail, fkUsuario FROM Perfil INNER JOIN Usuario U on Perfil.fkUsuario = U.Id WHERE U.Id= @pId");
+                .query("SELECT  NombreUsuario, Apellido, Telefono, Mail, fkUsuario FROM [Perfil] INNER JOIN [Usuario] U on Perfil.fkUsuario = U.Id WHERE [U].Id = @pId");
             returnEntity = result.recordset[0];
         } catch (error) {
             console.log(error);

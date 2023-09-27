@@ -13,7 +13,8 @@ import { useContext } from "react";
 import { contextPerfil } from "../../App";
 
 const Perfil = ({route}) => {
-    const idUsuario = route.params.id.id;
+    console.log("PERFIL", route.params);
+    const idUsuario = route.params.Id;
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono,setTelefono] = useState("");
@@ -28,6 +29,7 @@ const Perfil = ({route}) => {
     async function submitForm  (event)  {
       event.preventDefault();
       let Perfil = {
+        Id: idUsuario,
         'NombreUsuario': nombreUsuario,
         'Apellido': apellido,
         'Telefono': telefono,
@@ -46,7 +48,7 @@ const Perfil = ({route}) => {
         .catch(e => {
           console.log(e);
         });
-        navigation.navigate("Home",{Perfil:Perfil});
+        navigation.navigate("Home",{Perfil});
       }
     };
     const onChange = (event, selectedDate) => {

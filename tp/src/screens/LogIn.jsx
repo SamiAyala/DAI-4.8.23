@@ -24,7 +24,7 @@ const LogIn =()=> {
           contrasenia: contraseña,
         });
         console.log("res: ",res.data.usuario[0]);
-        navigation.navigate("Home",{id:res.data.usuario[0].Id},);
+        navigation.navigate("Home",{Id:res.data.usuario[0].Id},);
         
       } catch (e) {
       }

@@ -13,7 +13,8 @@ import { useContext } from "react";
 import { contextPerfil } from "../../App";
 
 const Edit = ({route}) => {
-    const idUsuario = route.params.id.id;
+  console.log("EDITROUTE", route.params)
+    const idUsuario = route.params.Id;
     const [nombreUsuario, setNombreUsuario] = useState("");
     const [apellido, setApellido] = useState("");
     const [telefono,setTelefono] = useState("");
@@ -25,20 +26,23 @@ const Edit = ({route}) => {
     const navigation = useNavigation();
     const context = useContext(contextPerfil);
     console.log("idUsuario",idUsuario);
-    async function submitForm  (event)  {
+
+
+    async function submitForm (event)  {
       event.preventDefault();
       let Perfil = {
+        Id: idUsuario,
         'NombreUsuario': nombreUsuario,
         'Apellido': apellido,
         'Telefono': telefono,
         'Mail': mail,
-        'fkUsuario': fkUsuario,
+        'fkUsuario': idUsuario,
         'fechaNacimiento':fechaNacimiento
       }
 
       console.log("Perfil",Perfil)
-    {
-      const res = await axios.put(`http://localhost:5000//perfil/editarForm/${idUsuario.id}`)
+    
+      const res = await axios.put(`http://localhost:5000/perfil/editarForm/${idUsuario}`, Perfil)
         .then(res => {
           context.setPerfil(Perfil);
           console.log("Perfil q se pasa",context.Perfil)
@@ -47,7 +51,7 @@ const Edit = ({route}) => {
           console.log(e);
         });
         navigation.navigate("Home",{Perfil:Perfil});
-      }
+      
     };
     const onChange = (event, selectedDate) => {
       const currentDate = selectedDate;
