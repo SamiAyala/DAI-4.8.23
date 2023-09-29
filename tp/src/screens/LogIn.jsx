@@ -7,34 +7,32 @@ import {
 } from "react-native";
 import axios from "axios";
 import Button from "../components/Button";
-import { Link , useNavigation } from "@react-navigation/native";
+import { Link, useNavigation } from "@react-navigation/native";
 
-const LogIn =()=> {
+const LogIn = () => {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContrasena] = useState("");
-  const [mensaje,setMensaje] = useState('Complete los campos:');
+  const [mensaje, setMensaje] = useState('Complete los campos:');
   const navigation = useNavigation();
 
   async function submitLogIn() {
-    console.log("login:", nombre, contraseña);
     if (nombre !== "" && contraseña !== "") {
       try {
         const res = await axios.post("http://localhost:5000/login", {
           nombre,
           contrasenia: contraseña,
         });
-        console.log("res: ",res.data.usuario[0]);
-        navigation.navigate("Home",{Id:res.data.usuario[0].Id});
-        
+        navigation.navigate("Home", { Id: res.data.usuario[0].Id });
+
       } catch (e) {
         setMensaje("Error, intente nuevamente.")
       }
-    } else{
+    } else {
     }
-    
+
   }
 
- 
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,41 +49,41 @@ const LogIn =()=> {
         placeholder="Escriba su contraseña"
         secureTextEntry={true}
       />
-      <Button  onPress={submitLogIn}  text={"Iniciar Sesión"} style={styles.boton} />
-      <Link to={{screen: "Register"}} style ={styles.textoLink}>Registrarse</Link>
+      <Button onPress={submitLogIn} text={"Iniciar Sesión"} style={styles.boton} />
+      <Link to={{ screen: "Register" }} style={styles.textoLink}>Registrarse</Link>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   input: {
-    width:250,  
+    width: 250,
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
   },
-  titulo:{
-  fontSize : 40,
+  titulo: {
+    fontSize: 40,
   },
-  boton:{
-    backgroundColor:"pink",
-    borderWidth:2,
+  boton: {
+    backgroundColor: "pink",
+    borderWidth: 2,
     borderColor: "black",
-    width: "auto", 
+    width: "auto",
     padding: 5,
   },
-  container:{
-   textAlign: "center",
-   justifyContent : "center",
-   marginLeft: "40%",
-   width: 'auto',
-   height: "auto",
-   padding:'200',
-   
+  container: {
+    textAlign: "center",
+    justifyContent: "center",
+    marginLeft: "40%",
+    width: 'auto',
+    height: "auto",
+    padding: '200',
+
   },
-  textoLink:{
-    color : "red",
+  textoLink: {
+    color: "red",
     fontSize: 30,
   },
   textoBoton: {

@@ -12,9 +12,7 @@ app.use(express.json());
 app.post('/login',async(req,res) =>{
     try{
         
-        console.log("req.body:",req.body)
         const response = await Usuario.Login(req.body.nombre, req.body.contrasenia)
-        console.log("response login:",response);
         if (response.length === 0) {
             res.status(401).json({message: "Completar los campos"});
         } else {
@@ -54,7 +52,6 @@ app.get("/perfil/:Id", async(req,res) => {
 
 app.post('/formPerfil',async(req,res) =>{
     try{
-        console.log("req.body",req.body)
         await Perfil.LlenarForm(req.body)
         res.status(201).json({message: 'Perfil completado'})
     } catch (error){
@@ -65,7 +62,6 @@ app.post('/formPerfil',async(req,res) =>{
 })
 
 app.put('/perfil/editarForm/:Id',async(req,res) => {
-    console.log("UPDATEBODY", req.body);
     let perfil = await Perfil.UpdateForm(req.body);
     res.status(201).json({message: 'Perfil cambiado'})
 })
