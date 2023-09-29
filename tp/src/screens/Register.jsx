@@ -7,13 +7,14 @@ import {
 } from "react-native";
 import axios from "axios";
 import Button from "../components/Button";
-import { Link } from "@react-navigation/native";
+import { Link, useNavigation } from "@react-navigation/native";
 
 
 const Register =()=> {
     const [nombre, setNombre] = useState("");
     const [contraseña, setContrasenia] = useState("");
-    const [mensaje, setMensaje] = useState("hola");
+    const [mensaje,setMensaje] = useState('Complete los campos:');
+    const navigation = useNavigation();
   
     async function submitRegister  (event)  {
         event.preventDefault();
@@ -25,15 +26,15 @@ const Register =()=> {
         if (nombre !== "" && contraseña !== "" ){
         const res = await axios.post('http://localhost:5000/registro', usuario)
           .then(res => {
-            setMensaje("Muy bien");
+            navigation.navigate("Login");
           })
           .catch(e => {
-            setMensaje("Muy mal");
+            setMensaje("Error, intente nuevamente");
             console.log(e);
           });
         }
         else{
-          setMensaje("Vacios");
+          setMensaje("Alguno de los campos está vacio.");
         }
       };
 
@@ -44,6 +45,7 @@ const Register =()=> {
     return (
       <SafeAreaView style={styles.container}>
         <Text style={styles.titulo}>Registrarse</Text>
+        <Text>{mensaje}</Text>
         <TextInput
           style={styles.input}
           onChangeText={(text) => setNombre(text)}

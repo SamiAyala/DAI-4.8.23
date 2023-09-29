@@ -8,15 +8,15 @@ import {
 import axios from "axios";
 import Button from "../components/Button";
 import { Link , useNavigation } from "@react-navigation/native";
-import { useContext } from 'react';
 
 const LogIn =()=> {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContrasena] = useState("");
+  const [mensaje,setMensaje] = useState('Complete los campos:');
   const navigation = useNavigation();
 
   async function submitLogIn() {
-    console.log("boca:", nombre, contraseña);
+    console.log("login:", nombre, contraseña);
     if (nombre !== "" && contraseña !== "") {
       try {
         const res = await axios.post("http://localhost:5000/login", {
@@ -24,9 +24,10 @@ const LogIn =()=> {
           contrasenia: contraseña,
         });
         console.log("res: ",res.data.usuario[0]);
-        navigation.navigate("Home",{Id:res.data.usuario[0].Id},);
+        navigation.navigate("Home",{Id:res.data.usuario[0].Id});
         
       } catch (e) {
+        setMensaje("Error, intente nuevamente.")
       }
     } else{
     }
@@ -37,7 +38,8 @@ const LogIn =()=> {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.titulo}>INICIO DE SESION</Text>
+      <Text style={styles.titulo}>Inicio de Sesión</Text>
+      <Text >{mensaje}</Text>
       <TextInput
         style={styles.input}
         onChangeText={(text) => setNombre(text)}

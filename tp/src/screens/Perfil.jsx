@@ -29,7 +29,6 @@ const Perfil = ({route}) => {
     async function submitForm  (event)  {
       event.preventDefault();
       let Perfil = {
-        Id: idUsuario,
         'NombreUsuario': nombreUsuario,
         'Apellido': apellido,
         'Telefono': telefono,
@@ -43,7 +42,6 @@ const Perfil = ({route}) => {
       const res = await axios.post('http://localhost:5000/formPerfil', Perfil)
         .then(res => {
           context.setPerfil(Perfil);
-          console.log("Perfil q se pasa",context.Perfil)
         })
         .catch(e => {
           console.log(e);

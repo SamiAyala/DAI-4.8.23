@@ -15,23 +15,23 @@ import { contextPerfil } from "../../App";
 const Edit = ({route}) => {
   console.log("EDITROUTE", route.params)
     const idUsuario = route.params.Id;
-    const [nombreUsuario, setNombreUsuario] = useState("");
-    const [apellido, setApellido] = useState("");
-    const [telefono,setTelefono] = useState("");
-    const [mail, setMail] = useState("");
-    const [fkUsuario , setFkUsuario] = useState(idUsuario);
+    const context = useContext(contextPerfil);
+    console.log("context",context);
+    const [nombreUsuario, setNombreUsuario] = useState(context.perfil.NombreUsuario);
+    const [apellido, setApellido] = useState(context.perfil.Apellido);
+    const [telefono,setTelefono] = useState(context.perfil.Telefono);
+    const [mail, setMail] = useState(context.perfil.Mail);
     const [fechaNacimiento,setFechaNacimiento] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const navigation = useNavigation();
-    const context = useContext(contextPerfil);
     console.log("idUsuario",idUsuario);
 
 
     async function submitForm (event)  {
       event.preventDefault();
       let Perfil = {
-        Id: idUsuario,
+        Id: context.perfil.Id,
         'NombreUsuario': nombreUsuario,
         'Apellido': apellido,
         'Telefono': telefono,
@@ -45,7 +45,6 @@ const Edit = ({route}) => {
       const res = await axios.put(`http://localhost:5000/perfil/editarForm/${idUsuario}`, Perfil)
         .then(res => {
           context.setPerfil(Perfil);
-          console.log("Perfil q se pasa",context.Perfil)
         })
         .catch(e => {
           console.log(e);
