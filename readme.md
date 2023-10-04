@@ -24,23 +24,23 @@
   <summary>Tabla de contenidos</summary>
   <ol>
     <li>
-      <a href="#about-the-project">Acerca del proyecto</a>
+      <a href="#Acerca-del-Proyecto">Acerca del proyecto</a>
       <ul>
-        <li><a href="#built-with">Desarrollado con</a></li>
+        <li><a href="#desarrollado-con">Desarrollado con</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Cómo empezar</a>
+      <a href="#Comenzando">Cómo empezar</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisitos</a></li>
-        <li><a href="#installation">Instalacióm</a></li>
+        <li><a href="#prerequisitos">Prerequisitos</a></li>
+        <li><a href="#instalación">Instalacióm</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Uso</a></li>
-    <li><a href="#roadmap">Plan de acción</a></li>
-    <li><a href="#contributing">Contribuciones</a></li>
-    <li><a href="#contact">Contacto</a></li>
-    <li><a href="#acknowledgments">Reconocimientos</a></li>
+    <li><a href="#Uso">Uso</a></li>
+    <li><a href="#Plan-de-Acción">Plan de acción</a></li>
+    <li><a href="#contribuciones">Contribuciones</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#reconocimiento">Reconocimientos</a></li>
   </ol>
 </details>
 
