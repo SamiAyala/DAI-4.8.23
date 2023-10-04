@@ -136,7 +136,7 @@ Si tiene alguna sugerencia que pueda hacer esto mejor, porfavor realice un fork 
 
 
 <!-- CONTACT -->
-## Contact
+## Contacto
 
 Samir Ayala - [https://github.com/SamiAyala](https://github.com/SamiAyala)
 
