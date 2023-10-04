@@ -49,8 +49,6 @@
 <!-- ABOUT THE PROJECT -->
 ## Acerca del Proyecto
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
-
 Página de Inicio de Sesión, Registro y creación + Edición de perfil, todo guardado en una base de datos. Con diseño minimalista.
 
 
@@ -60,7 +58,7 @@ Página de Inicio de Sesión, Registro y creación + Edición de perfil, todo gu
 
 ### Desarrollado con
 
-* [![React Native][ReactNative.js]][ReactNative-url]
+* ![React Native][ReactNative.js]
 
 <p align="right">(<a href="#readme-top">Volver al comienzo</a>)</p>
 
