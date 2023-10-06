@@ -73,7 +73,7 @@ Página de Inicio de Sesión, Registro y creación + Edición de perfil, todo gu
   npm install npm@latest -g
   ```
   npm i expo-cli -g
-  ```
+
 
 ### Installación
 
