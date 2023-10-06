@@ -58,7 +58,7 @@ Página de Inicio de Sesión, Registro y creación + Edición de perfil, todo gu
 
 ### Desarrollado con
 
-* ![React Native][ReactNative.js]
+* ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
 <p align="right">(<a href="#readme-top">Volver al comienzo</a>)</p>
 
