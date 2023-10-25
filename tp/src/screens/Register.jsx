@@ -9,6 +9,23 @@ import axios from "axios";
 import Button from "../components/Button";
 import { Link, useNavigation } from "@react-navigation/native";
 
+import { initializeApp } from "firebase/app";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAZopMyB0CLE3eIGfYZDJUihVoje983i2M",
+  authDomain: "practica-69c7f.firebaseapp.com",
+  projectId: "practica-69c7f",
+  storageBucket: "practica-69c7f.appspot.com",
+  messagingSenderId: "12946961460",
+  appId: "1:12946961460:web:1473f273c65d590b010661"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+
 
 const Register = () => {
   const [nombre, setNombre] = useState("");
@@ -18,7 +35,7 @@ const Register = () => {
 
   async function submitRegister(event) {
     event.preventDefault();
-    let usuario = {
+    /*let usuario = {
       nombre: nombre,
       contrasenia: contraseña,
     }
@@ -34,7 +51,19 @@ const Register = () => {
     }
     else {
       setMensaje("Alguno de los campos está vacio.");
-    }
+    }*/
+    createUserWithEmailAndPassword(auth, nombre, contraseña)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigation.navigate("Login");
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+      });
   };
 
   function validateForm() {
