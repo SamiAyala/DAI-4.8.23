@@ -12,8 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useContext } from "react";
 import { contextPerfil } from "../../App";
 
-const Perfil = ({ route }) => {
-  const idUsuario = route.params.Id;
+const Perfil = () => {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [apellido, setApellido] = useState("");
   const [telefono, setTelefono] = useState("");

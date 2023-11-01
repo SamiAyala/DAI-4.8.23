@@ -8,19 +8,19 @@ import {
 import axios from "axios";
 import Button from "../components/Button";
 import { Link, useNavigation } from "@react-navigation/native";
-
+import {doc , setDoc , getFirestore , Toast } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAZopMyB0CLE3eIGfYZDJUihVoje983i2M",
-  authDomain: "practica-69c7f.firebaseapp.com",
-  projectId: "practica-69c7f",
-  storageBucket: "practica-69c7f.appspot.com",
-  messagingSenderId: "12946961460",
-  appId: "1:12946961460:web:1473f273c65d590b010661"
+  apiKey: "AIzaSyC7R-klcw1FAQUflOXdt9GbDIyaxfeAS7M",
+  authDomain: "practica-d8353.firebaseapp.com",
+  projectId: "practica-d8353",
+  storageBucket: "practica-d8353.appspot.com",
+  messagingSenderId: "102767442188",
+  appId: "1:102767442188:web:9bb9c13dd986ddeeebb129",
+  measurementId: "G-YY98MVBJRB"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -31,39 +31,33 @@ const Register = () => {
   const [nombre, setNombre] = useState("");
   const [contraseña, setContrasenia] = useState("");
   const [mensaje, setMensaje] = useState('Complete los campos:');
-  const navigation = useNavigation();
 
   async function submitRegister(event) {
     event.preventDefault();
-    /*let usuario = {
-      nombre: nombre,
-      contrasenia: contraseña,
-    }
-    if (nombre !== "" && contraseña !== "") {
-      const res = await axios.post('http://localhost:5000/registro', usuario)
-        .then(res => {
-          navigation.navigate("Login");
-        })
-        .catch(e => {
-          setMensaje("Error, intente nuevamente");
-          console.log(e);
-        });
-    }
-    else {
-      setMensaje("Alguno de los campos está vacio.");
-    }*/
-    createUserWithEmailAndPassword(auth, nombre, contraseña)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        navigation.navigate("Login");
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
+    console.log("nombre",nombre);
+    console.log("contraseña",contraseña);
+    try {
+      const auth = getAuth();
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        nombre,
+        contraseña
+      );
+      console.log("user",user);
+      const { uid } = user;
+      const db = getFirestore();
+      await setDoc(doc(db, "usuario", uid), {
+        nombre,
+        contraseña,
+        uid,
       });
+      setNombre("");
+      setContrasenia("");
+      
+    } catch (error) {
+      console.log(error);
+      
+    }
   };
 
   function validateForm() {

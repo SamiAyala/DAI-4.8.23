@@ -8,22 +8,23 @@ import {
 import axios from "axios";
 import Button from "../components/Button";
 import { Link, useNavigation } from "@react-navigation/native";
-
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAZopMyB0CLE3eIGfYZDJUihVoje983i2M",
-  authDomain: "practica-69c7f.firebaseapp.com",
-  projectId: "practica-69c7f",
-  storageBucket: "practica-69c7f.appspot.com",
-  messagingSenderId: "12946961460",
-  appId: "1:12946961460:web:1473f273c65d590b010661"
+  apiKey: "AIzaSyC7R-klcw1FAQUflOXdt9GbDIyaxfeAS7M",
+  authDomain: "practica-d8353.firebaseapp.com",
+  projectId: "practica-d8353",
+  storageBucket: "practica-d8353.appspot.com",
+  messagingSenderId: "102767442188",
+  appId: "1:102767442188:web:9bb9c13dd986ddeeebb129",
+  measurementId: "G-YY98MVBJRB"
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 const LogIn = () => {
   const [nombre, setNombre] = useState("");
@@ -53,7 +54,7 @@ const LogIn = () => {
         // Signed in
         console.log("userCredential",userCredential.user);
         const user = userCredential.user;
-        navigation.navigate("Home", { Id: user.Id });
+        navigation.navigate("Home", { Id: user.uid });
         // ...
       })
       .catch((error) => {
