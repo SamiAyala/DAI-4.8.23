@@ -28,30 +28,30 @@ const auth = getAuth();
 
 
 const Register = () => {
-  const [nombre, setNombre] = useState("");
+  const [mail, setMail] = useState("");
   const [contraseña, setContrasenia] = useState("");
   const [mensaje, setMensaje] = useState('Complete los campos:');
 
   async function submitRegister(event) {
     event.preventDefault();
-    console.log("nombre",nombre);
+    console.log("mail",mail);
     console.log("contraseña",contraseña);
     try {
       const auth = getAuth();
       const { user } = await createUserWithEmailAndPassword(
         auth,
-        nombre,
+        mail,
         contraseña
       );
       console.log("user",user);
       const { uid } = user;
       const db = getFirestore();
       await setDoc(doc(db, "usuario", uid), {
-        nombre,
+        mail,
         contraseña,
         uid,
       });
-      setNombre("");
+      setMail("");
       setContrasenia("");
       
     } catch (error) {
@@ -61,7 +61,7 @@ const Register = () => {
   };
 
   function validateForm() {
-    return nombre.length > 0 && contraseña.length > 0;
+    return mail.length > 0 && contraseña.length > 0;
   }
 
   return (
@@ -70,10 +70,10 @@ const Register = () => {
       <Text>{mensaje}</Text>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setNombre(text)}
+        onChangeText={(text) => setMail(text)}
         keyboardType="default"
-        value={nombre}
-        placeholder="Escriba su nombre aqui"
+        value={mail}
+        placeholder="Escriba su mail aqui"
       />
       <TextInput
         style={styles.input}

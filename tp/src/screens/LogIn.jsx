@@ -27,7 +27,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 const LogIn = () => {
-  const [nombre, setNombre] = useState("");
+  const [mail, setMail] = useState("");
   const [contraseña, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState('Complete los campos:');
   const navigation = useNavigation();
@@ -49,7 +49,7 @@ const LogIn = () => {
     }*/
 
 
-    signInWithEmailAndPassword(auth, nombre, contraseña)
+    signInWithEmailAndPassword(auth, mail, contraseña)
       .then((userCredential) => {
         // Signed in
         console.log("userCredential",userCredential.user);
@@ -72,8 +72,8 @@ const LogIn = () => {
       <Text >{mensaje}</Text>
       <TextInput
         style={styles.input}
-        onChangeText={(text) => setNombre(text)}
-        placeholder="Escriba su nombre aqui"
+        onChangeText={(text) => setMail(text)}
+        placeholder="Escriba su mail aqui"
       />
       <TextInput
         style={styles.input}

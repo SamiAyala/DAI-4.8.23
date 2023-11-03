@@ -1,51 +1,77 @@
-import { React, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  SafeAreaView,
-  TextInput,
-} from "react-native";
+import { React, useState, useEffect } from "react";
+import { StyleSheet, Text, SafeAreaView, TextInput } from "react-native";
 import Button from "../components/Button";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useContext } from "react";
 import { contextPerfil } from "../../App";
+import { addDoc, doc, getFirestore, updateDoc,setDoc,  collection } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC7R-klcw1FAQUflOXdt9GbDIyaxfeAS7M",
+  authDomain: "practica-d8353.firebaseapp.com",
+  projectId: "practica-d8353",
+  storageBucket: "practica-d8353.appspot.com",
+  messagingSenderId: "102767442188",
+  appId: "1:102767442188:web:9bb9c13dd986ddeeebb129",
+  measurementId: "G-YY98MVBJRB"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 
 const Perfil = () => {
   const [nombreUsuario, setNombreUsuario] = useState("");
   const [apellido, setApellido] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [mail, setMail] = useState("");
-  const [fkUsuario, setFkUsuario] = useState(idUsuario);
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
-  const [mode, setMode] = useState('date');
+  const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
   const context = useContext(contextPerfil);
+
+  useEffect(() => {
+    console.log("context recien entro", context.perfil)
+  })
+
+
   async function submitForm(event) {
     event.preventDefault();
-    let Perfil = {
-      'NombreUsuario': nombreUsuario,
-      'Apellido': apellido,
-      'Telefono': telefono,
-      'Mail': mail,
-      'fkUsuario': fkUsuario,
-      'fechaNacimiento': fechaNacimiento
-    }
-
-    console.log("Perfil", Perfil)
-    {
-      const res = await axios.post('http://localhost:5000/formPerfil', Perfil)
-        .then(res => {
-          context.setPerfil(Perfil);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-      navigation.navigate("Home", { Perfil });
-    }
-  };
+    let PerfilAux = {
+      NombreUsuario: nombreUsuario,
+      Apellido: apellido,
+      Telefono: telefono,
+      fechaNacimiento: fechaNacimiento,
+    };
+    console.log("Perfil context", context.perfil)
+    console.log("Perfil", Perfil);
+    /*const docRef = await addDoc(collection(db, "usuario"), {
+      NombreUsuario: nombreUsuario,
+      Apellido: apellido,
+      Telefono: telefono,
+      Mail: mail,
+      fechaNacimiento: fechaNacimiento
+    });*/
+    const docRef = doc(collection(db, "usuario" ),context.perfil.uid );
+    console.log("docRef",docRef)
+    await setDoc(docRef, {
+      NombreUsuario: nombreUsuario,
+      Apellido: apellido,
+      Telefono: telefono,
+      fechaNacimiento: fechaNacimiento
+    },{ merge: true });
+    context.setPerfil(PerfilAux);
+    console.log("perfil yo",context.perfil)
+    setNombreUsuario("")
+    setApellido("")
+    setTelefono("")
+    setFechaNacimiento("")
+    navigation.navigate("Home");
+    
+  }
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
     setShow(false);
@@ -58,11 +84,11 @@ const Perfil = () => {
   };
 
   const showDatepicker = () => {
-    showMode('date');
+    showMode("date");
   };
 
   const showTimepicker = () => {
-    showMode('time');
+    showMode("time");
   };
 
   return (
@@ -89,13 +115,6 @@ const Perfil = () => {
         placeholder="Escriba su telefono aqui"
         value={telefono}
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setMail(text)}
-        keyboardType="email-address"
-        placeholder="Escriba su mail aqui"
-        value={mail}
-      />
       <Button onPress={showDatepicker} title="Show date picker!" />
       <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {fechaNacimiento.toLocaleString()}</Text>
@@ -110,8 +129,8 @@ const Perfil = () => {
       )}
       <Button onPress={submitForm} text={"Enviar"} />
     </SafeAreaView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   input: {
@@ -132,9 +151,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     marginLeft: "40%",
-    width: 'auto',
+    width: "auto",
     height: "auto",
-    padding: '200',
+    padding: "200",
   },
   titulo: {
     fontSize: 40,
@@ -142,7 +161,7 @@ const styles = StyleSheet.create({
   textoLink: {
     color: "red",
     fontSize: 30,
-    textDecorationLine: 'Underline'
+    textDecorationLine: "Underline",
   },
   textoBoton: {
     fontFamily: " cursive",
