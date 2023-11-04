@@ -59,7 +59,7 @@ Página de Inicio de Sesión, Registro y creación + Edición de perfil, todo gu
 ### Desarrollado con
 
 * ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-* ![Firebase](https://img.shields.io/badge/#FFCA28)
+* ![Firebase](https://img.shields.io/firebase/v/firebase.svg?logo=firebase)
 
 <p align="right">(<a href="#readme-top">Volver al comienzo</a>)</p>
 
