@@ -11,41 +11,55 @@ import { Link, useNavigation } from "@react-navigation/native";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useContext } from "react";
 import { contextPerfil } from "../../App";
+import { initializeApp } from "firebase/app";
+import { addDoc, doc, getFirestore, updateDoc,setDoc, collection, getDoc} from "firebase/firestore";
 
-const Edit = ({ route }) => {
-  const idUsuario = route.params.Id;
+const firebaseConfig = {
+  apiKey: "AIzaSyC7R-klcw1FAQUflOXdt9GbDIyaxfeAS7M",
+  authDomain: "practica-d8353.firebaseapp.com",
+  projectId: "practica-d8353",
+  storageBucket: "practica-d8353.appspot.com",
+  messagingSenderId: "102767442188",
+  appId: "1:102767442188:web:9bb9c13dd986ddeeebb129",
+  measurementId: "G-YY98MVBJRB"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const Edit = () => {
   const context = useContext(contextPerfil);
   const [nombreUsuario, setNombreUsuario] = useState(context.perfil.NombreUsuario);
   const [apellido, setApellido] = useState(context.perfil.Apellido);
   const [telefono, setTelefono] = useState(context.perfil.Telefono);
-  const [mail, setMail] = useState(context.perfil.Mail);
   const [fechaNacimiento, setFechaNacimiento] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const navigation = useNavigation();
-
+  console.log("context",context)
 
   async function submitForm(event) {
     event.preventDefault();
-    let Perfil = {
+    let PerfilAux = {
       Id: context.perfil.Id,
       'NombreUsuario': nombreUsuario,
       'Apellido': apellido,
       'Telefono': telefono,
-      'Mail': mail,
-      'fkUsuario': idUsuario,
       'fechaNacimiento': fechaNacimiento
     }
-
-    const res = await axios.put(`http://localhost:5000/perfil/editarForm/${idUsuario}`, Perfil)
-      .then(res => {
-        context.setPerfil(Perfil);
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    navigation.navigate("Home", { Perfil: Perfil });
-
+    const docRef = doc(collection(db, "usuario" ),context.perfil.uid );
+    console.log("docRef",docRef)
+    await setDoc(docRef, {
+      NombreUsuario: nombreUsuario,
+      Apellido: apellido,
+      Telefono: telefono,
+      fechaNacimiento: fechaNacimiento
+    },{ merge: true });
+    context.setPerfil(PerfilAux);
+    setNombreUsuario("")
+    setApellido("")
+    setTelefono("")
+    setFechaNacimiento("")
+    navigation.navigate("Home");
   };
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -89,13 +103,6 @@ const Edit = ({ route }) => {
         keyboardType="phone-pad"
         placeholder={context.perfil.Telefono}
         value={telefono}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={(text) => setMail(text)}
-        keyboardType="email-address"
-        placeholder={context.perfil.Mail}
-        value={mail}
       />
       <Button onPress={showDatepicker} title="Show date picker!" />
       <Button onPress={showTimepicker} title="Show time picker!" />
