@@ -30,7 +30,9 @@ const auth = getAuth();
 const Register = () => {
   const [mail, setMail] = useState("");
   const [contraseña, setContrasenia] = useState("");
+  const [error,setError] = useState("");
   const [mensaje, setMensaje] = useState('Complete los campos:');
+  const navigation = useNavigation();
 
   async function submitRegister(event) {
     event.preventDefault();
@@ -53,9 +55,10 @@ const Register = () => {
       });
       setMail("");
       setContrasenia("");
+      navigation.navigate("Login");
       
     } catch (error) {
-      console.log(error);
+      setError(error.message);
       
     }
   };
@@ -83,6 +86,7 @@ const Register = () => {
         secureTextEntry={true}
         value={contraseña}
       />
+      <Text style={styles.error}>{error}</Text>
       <Button onPress={submitRegister} text={"Registrarse"} disabled={!validateForm()} />
       <Link to={{ screen: "Login" }} style={styles.textoLink}>Iniciar Sesion</Link>
     </SafeAreaView>
@@ -90,6 +94,10 @@ const Register = () => {
 }
 
 const styles = StyleSheet.create({
+  error: {
+    color:'red',
+    fontSize:20
+  },
   input: {
     width: 250,
     height: 40,

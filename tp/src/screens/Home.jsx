@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Text, SafeAreaView } from "react-native";
+import {StyleSheet, Text, SafeAreaView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Button from "../components/Button";
 import axios from "axios";
@@ -41,7 +41,7 @@ const Home = ({ route }) => {
     };
     fetchData();
   }, []);
-
+ 
   useEffect(() => {
     console.log("DOCSNAP", docSnap);
   }, [docSnap])
@@ -58,24 +58,66 @@ const Home = ({ route }) => {
   ) : typeof context.perfil.NombreUsuario === "undefined" &&
     typeof context.perfil.Apellido === "undefined" ? (
     <SafeAreaView>
-      <Text>Bienvenido {context.perfil.nombre}!!!</Text>
+      <View style={styles.buttonStyleContainer}>
+      <Button
+        onPress={() => navigation.navigate("Home")}
+        text={"Home"}
+        style={styles.buttonStyle}
+      ></Button>
+      <Button
+        onPress={() => navigation.navigate("Productos")}
+        text={"Productos"}
+        style={styles.buttonStyle}
+      ></Button>
       <Button
         onPress={() => navigation.navigate("Perfil")}
-        text={"Completa tu perfil"}
+        text={"Completar perfil"}
+        style={styles.buttonStyle}
       ></Button>
+      </View>
+      
     </SafeAreaView>
   ) : (
     <SafeAreaView>
-      <Text>
-        Bienvenido {context.perfil.NombreUsuario} {context.perfil.Apellido}
-      </Text>
+      <View style={styles.buttonStyleContainer}>
       <Button
-        onPress={() => navigation.navigate("Edit")}
-        text={"Edita tu perfil"}
+        onPress={() => navigation.navigate("Home")}
+        text={"Home"}
+        style={styles.buttonStyle}
       ></Button>
+      <Button
+        onPress={() => navigation.navigate("Productos")}
+        text={"Productos"}
+        style={styles.buttonStyle}
+      ></Button>
+      <Button
+        onPress={() => navigation.navigate("Perfil")}
+        text={"Editar perfil"}
+        style={styles.buttonStyle}
+      ></Button>
+      </View>
+      
     </SafeAreaView>
   );
   return (<></>);
 };
+const styles = StyleSheet.create({
+  buttonStyleContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    marginHorizontal: 20,
+    marginTop: 5,
+    justifyContent: 'space-around',
+  },
+  buttonStyle:{
+    backgroundColor: "pink ",
+    borderWidth: 0,
+    borderColor: "black",
+    width: 200,
+  }
+})
+
+
+
 
 export default Home;

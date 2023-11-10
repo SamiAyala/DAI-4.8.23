@@ -45,6 +45,7 @@ const Perfil = () => {
       Apellido: apellido,
       Telefono: telefono,
       fechaNacimiento: fechaNacimiento,
+      uid:context.perfil.uid
     };
     console.log("Perfil context", context.perfil)
     console.log("Perfil", Perfil);
@@ -61,7 +62,8 @@ const Perfil = () => {
       NombreUsuario: nombreUsuario,
       Apellido: apellido,
       Telefono: telefono,
-      fechaNacimiento: fechaNacimiento
+      fechaNacimiento: fechaNacimiento,
+      uid:context.perfil.uid
     },{ merge: true });
     context.setPerfil(PerfilAux);
     console.log("perfil yo",context.perfil)

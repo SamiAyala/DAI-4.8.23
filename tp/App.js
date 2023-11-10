@@ -6,6 +6,7 @@ import Register from "./src/screens/Register.jsx"
 import Home from "./src/screens/Home.jsx"
 import Perfil from "./src/screens/Perfil.jsx";
 import Edit from "./src/screens/Edit";
+import Productos from "./src/screens/Productos";
 import { createContext } from "react";
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ export default function App() {
           <Stack.Screen name ="Home" component={Home}/>
           <Stack.Screen name ="Perfil" component={Perfil}/> 
           <Stack.Screen name = "Edit" component={Edit}/>
+          <Stack.Screen name = "Productos" component={Productos}/>
         </Stack.Navigator>
       </contextPerfil.Provider>
     </NavigationContainer>

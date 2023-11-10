@@ -30,24 +30,11 @@ const LogIn = () => {
   const [mail, setMail] = useState("");
   const [contraseña, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState('Complete los campos:');
+  const [error,setError] = useState("");
   const navigation = useNavigation();
   const auth = getAuth();
 
   async function submitLogIn() {
-    /*if (nombre !== "" && contraseña !== "") {
-      try {
-        const res = await axios.post("http://localhost:5000/login", {
-          nombre,
-          contrasenia: contraseña,
-        });
-        navigation.navigate("Home", { Id: res.data.usuario[0].Id });
-
-      } catch (e) {
-        setMensaje("Error, intente nuevamente.")
-      }
-    } else {
-    }*/
-
 
     signInWithEmailAndPassword(auth, mail, contraseña)
       .then((userCredential) => {
@@ -58,13 +45,12 @@ const LogIn = () => {
         // ...
       })
       .catch((error) => {
-        const errorCode = error.code;
+        console.log("error",error.message)
+        setError(error.message)
         const errorMessage = error.message;
       });
 
   }
-
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,6 +67,7 @@ const LogIn = () => {
         placeholder="Escriba su contraseña"
         secureTextEntry={true}
       />
+      <Text >{error}</Text>
       <Button onPress={submitLogIn} text={"Iniciar Sesión"} style={styles.boton} />
       <Link to={{ screen: "Register" }} style={styles.textoLink}>Registrarse</Link>
     </SafeAreaView>
@@ -88,6 +75,10 @@ const LogIn = () => {
 }
 
 const styles = StyleSheet.create({
+  error:{
+    color:'red',
+    fontSize:20
+  },
   input: {
     width: 250,
     height: 40,
