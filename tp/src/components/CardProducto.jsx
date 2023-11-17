@@ -1,7 +1,8 @@
 
-import { Text, Card, Button, Overlay } from '@rneui/themed';
+import { Text, Card, Button, Overlay,Divider  } from '@rneui/themed';
 import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
+import MyCarousel from './MyCarousel';
 
 const CardProducto = (props) => {
   const [visible, setVisible] = useState(false);
@@ -41,14 +42,34 @@ const CardProducto = (props) => {
         title="Ver más"
       />
       <Overlay isVisible={visible} onBackdropPress={toggleOverlay}>
-      <Text style={styles.textPrimary}>Hello!</Text>
+      <Text style={styles.textPrimary}>{p.title}</Text>
+      <Divider />
+      <MyCarousel images={p.images}></MyCarousel>
       <Text style={styles.textSecondary}>
-        Welcome to React Native Elements
+        {p.description}
       </Text>
+      <View style={{padding:'5%'}}>
+      <View style={{flexDirection: 'row'}}>
+      <Text id='precio' style={{fontWeight:'bold'}}>
+        ${p.price} %{p.discountPercentage}
+        </Text><Text id='marca' style={{marginLeft:'auto',color:'gray'}}>{p.brand}</Text>
+      </View>
+      <Text style={{textAlign:'right',color:'gray'}}>{p.category}</Text>
+      <Text style={{textAlign:'center',fontSize:'bold'}}>Quedan {p.stock}</Text>
+      <Text style={{textAlign:'center',color:'gold'}}>{p.rating}⭐</Text>
+      <Divider />
+      <Button
+      style={{marginBottom:'5%'}}
+        title="Comprar"
+        onPress={()=>alert("Compra realizada con éxito!")}
+      />
+
       <Button
         title="Close"
+        color='error'
         onPress={toggleOverlay}
       />
+      </View>
     </Overlay>
     </Card>
     )
