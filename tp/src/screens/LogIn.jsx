@@ -6,11 +6,12 @@ import {
   TextInput,
 } from "react-native";
 import axios from "axios";
-import Button from "../components/Button";
+//import Button from "../components/Button";
 import { Link, useNavigation } from "@react-navigation/native";
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
+import { Button } from '@rneui/themed';
 
 
 const firebaseConfig = {
@@ -67,8 +68,8 @@ const LogIn = () => {
         placeholder="Escriba su contraseña"
         secureTextEntry={true}
       />
-      <Text >{error}</Text>
-      <Button onPress={submitLogIn} text={"Iniciar Sesión"} style={styles.boton} />
+      <Text style={styles.error}>{error}</Text>
+      <Button onPress={submitLogIn}>Iniciar Sesión</Button>
       <Link to={{ screen: "Register" }} style={styles.textoLink}>Registrarse</Link>
     </SafeAreaView>
   );
@@ -93,21 +94,21 @@ const styles = StyleSheet.create({
     backgroundColor: "pink",
     borderWidth: 2,
     borderColor: "black",
+    alignItems:'center',
     width: "auto",
     padding: 5,
   },
   container: {
     textAlign: "center",
     justifyContent: "center",
-    marginLeft: "40%",
+    alignItems:'center',
     width: 'auto',
     height: "auto",
-    padding: '200',
 
   },
   textoLink: {
-    color: "red",
-    fontSize: 30,
+    color: "blue",
+    fontSize: 20,
   },
   textoBoton: {
     fontFamily: " cursive",

@@ -6,11 +6,12 @@ import {
   TextInput,
 } from "react-native";
 import axios from "axios";
-import Button from "../components/Button";
+//import Button from "../components/Button";
 import { Link, useNavigation } from "@react-navigation/native";
 import {doc , setDoc , getFirestore , Toast } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Button } from '@rneui/themed';
 
 
 const firebaseConfig = {
@@ -64,7 +65,7 @@ const Register = () => {
   };
 
   function validateForm() {
-    return mail.length > 0 && contraseña.length > 0;
+    return mail.length > 0 && contraseña.length >= 6;
   }
 
   return (
@@ -87,7 +88,7 @@ const Register = () => {
         value={contraseña}
       />
       <Text style={styles.error}>{error}</Text>
-      <Button onPress={submitRegister} text={"Registrarse"} disabled={!validateForm()} />
+      <Button onPress={submitRegister} disabled={!validateForm()}>Registrarse</Button>
       <Link to={{ screen: "Login" }} style={styles.textoLink}>Iniciar Sesion</Link>
     </SafeAreaView>
   );
@@ -105,34 +106,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  boton: {
-    backgroundColor: "pink",
-    borderWidth: 2,
-    borderColor: "black",
-    width: 200,
-    padding: 5,
-  },
   container: {
     textAlign: "center",
     justifyContent: "center",
-    marginLeft: "40%",
+    alignItems:'center',
     width: 'auto',
     height: "auto",
-    padding: '200',
   },
   titulo: {
     fontSize: 40,
   },
   textoLink: {
-    color: "red",
-    fontSize: 30,
-  },
-  textoBoton: {
-    fontFamily: " cursive",
+    color: "blue",
     fontSize: 20,
-    marginBottom: 10,
-    color: "black",
-  },
+  }
 });
 
 export default Register;

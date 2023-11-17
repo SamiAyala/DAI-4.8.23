@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
-import Button from "../components/Button";
+import { Button } from '@rneui/themed';
 import axios from "axios";
 import { Link, useNavigation } from "@react-navigation/native";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -104,7 +104,7 @@ const Edit = () => {
         placeholder={context.perfil.Telefono}
         value={telefono}
       />
-      <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showDatepicker} title="Show date picker!" style={{marginBottom:'3%'}}/>
       <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {fechaNacimiento.toLocaleString()}</Text>
       {show && (
@@ -116,7 +116,7 @@ const Edit = () => {
           onChange={onChange}
         />
       )}
-      <Button onPress={submitForm} text={"Enviar"} />
+      <Button onPress={submitForm}>Enviar</Button>
     </SafeAreaView>
   )
 }
@@ -129,20 +129,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  boton: {
-    backgroundColor: "pink",
-    borderWidth: 2,
-    borderColor: "black",
-    width: 200,
-    padding: 5,
-  },
   container: {
-    textAlign: "center",
     justifyContent: "center",
-    marginLeft: "40%",
+    alignItems:'center',
     width: 'auto',
     height: "auto",
-    padding: '200',
   },
   titulo: {
     fontSize: 40,
@@ -151,13 +142,6 @@ const styles = StyleSheet.create({
     color: "red",
     fontSize: 30,
     textDecorationLine: 'Underline'
-  },
-  textoBoton: {
-    fontFamily: " cursive",
-    fontSize: 20,
-    marginBottom: 10,
-    color: "black",
-  },
-});
+}});
 
 export default Edit;

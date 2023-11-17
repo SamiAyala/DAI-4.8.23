@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from "react";
 import { StyleSheet, Text, SafeAreaView, TextInput } from "react-native";
-import Button from "../components/Button";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -8,6 +7,7 @@ import { useContext } from "react";
 import { contextPerfil } from "../../App";
 import { addDoc, doc, getFirestore, updateDoc,setDoc,  collection } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
+import { Button } from '@rneui/themed';
 
 
 const firebaseConfig = {
@@ -117,7 +117,7 @@ const Perfil = () => {
         placeholder="Escriba su telefono aqui"
         value={telefono}
       />
-      <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showDatepicker} title="Show date picker!" style={{marginBottom:'3%'}}/>
       <Button onPress={showTimepicker} title="Show time picker!" />
       <Text>selected: {fechaNacimiento.toLocaleString()}</Text>
       {show && (
@@ -129,7 +129,7 @@ const Perfil = () => {
           onChange={onChange}
         />
       )}
-      <Button onPress={submitForm} text={"Enviar"} />
+      <Button onPress={submitForm}>Enviar</Button>
     </SafeAreaView>
   );
 };
@@ -142,35 +142,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
   },
-  boton: {
-    backgroundColor: "pink",
-    borderWidth: 2,
-    borderColor: "black",
-    width: 200,
-    padding: 5,
-  },
   container: {
     textAlign: "center",
     justifyContent: "center",
-    marginLeft: "40%",
+    alignItems:'center',
     width: "auto",
     height: "auto",
-    padding: "200",
   },
   titulo: {
     fontSize: 40,
-  },
-  textoLink: {
-    color: "red",
-    fontSize: 30,
-    textDecorationLine: "Underline",
-  },
-  textoBoton: {
-    fontFamily: " cursive",
-    fontSize: 20,
-    marginBottom: 10,
-    color: "black",
-  },
+  }
 });
 
 export default Perfil;
