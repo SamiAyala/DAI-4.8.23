@@ -23,6 +23,7 @@ const db = getFirestore(app);
 const Home = ({ route }) => {
   const [docSnap, setDocSnap] = useState({});
   const [loading, setLoading] = useState(true);
+  const [listProducts,setListProducts] = useState();
   const context = useContext(contextPerfil);
   const navigation = useNavigation();
 
@@ -37,26 +38,17 @@ const Home = ({ route }) => {
       console.log("r", r.data());
       setDocSnap(r.data());
       context.setPerfil(r.data());
-      setLoading(false);
+      axios.get('https://dummyjson.com/products?limit=10&')
+            .then(res => {
+                setListProducts(res.data.products);
+                setLoading(false);
+            });
     };
     fetchData();
   }, []);
- 
-  useEffect(() => {
-    console.log("DOCSNAP", docSnap);
-  }, [docSnap])
-
-  /* if (docSnap.exists()) {
-    console.log("Document data:", docSnap.data());
-  } else {
-    // docSnap.data() will be undefined in this case
-    console.log("No such document!");
-  }
-*/
   return loading ? (
     <>cargando</>
-  ) : typeof context.perfil.NombreUsuario === "undefined" &&
-    typeof context.perfil.Apellido === "undefined" ? (
+  ) :
     <SafeAreaView>
       <View style={styles.buttonStyleContainer}>
       <Button
@@ -64,42 +56,21 @@ const Home = ({ route }) => {
         text={"Home"}
         style={styles.buttonStyle}
       ></Button>
-      <Button
-        onPress={() => navigation.navigate("Productos")}
-        text={"Productos"}
-        style={styles.buttonStyle}
-      ></Button>
-      <Button
-        onPress={() => navigation.navigate("Perfil")}
-        text={"Completar perfil"}
-        style={styles.buttonStyle}
-      ></Button>
+      {typeof context.perfil.NombreUsuario === "undefined" &&
+    typeof context.perfil.Apellido === "undefined" ? 
+    <Button
+      onPress={() => navigation.navigate("Perfil")}
+      text={"Completar perfil"}
+      style={styles.buttonStyle}
+    ></Button>
+    :
+    <Button
+    onPress={() => navigation.navigate("Perfil")}
+    text={"Editar perfil"}
+    style={styles.buttonStyle}
+  ></Button>}
       </View>
-      
     </SafeAreaView>
-  ) : (
-    <SafeAreaView>
-      <View style={styles.buttonStyleContainer}>
-      <Button
-        onPress={() => navigation.navigate("Home")}
-        text={"Home"}
-        style={styles.buttonStyle}
-      ></Button>
-      <Button
-        onPress={() => navigation.navigate("Productos")}
-        text={"Productos"}
-        style={styles.buttonStyle}
-      ></Button>
-      <Button
-        onPress={() => navigation.navigate("Perfil")}
-        text={"Editar perfil"}
-        style={styles.buttonStyle}
-      ></Button>
-      </View>
-      
-    </SafeAreaView>
-  );
-  return (<></>);
 };
 const styles = StyleSheet.create({
   buttonStyleContainer: {
